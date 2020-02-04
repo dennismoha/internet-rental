@@ -1,66 +1,98 @@
 const User = require('../model/users_singup');
 const bcrypt = require('bcrypt');
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken')
 
-//this is the normal users login and signup form.
-
-const Signup = (req,res)=> {
-	bcrypt.hash(req.body.password,10).then(
-		(hash)=> {
-			const user = new User({
-				firstname: req.body.firstname,
-				lastname:  req.body.lastname,
-				email	:  req.body.email,
-				phone_number: req.body.phone_number,
-				password : hash
-			});
-
-			user.save().then(
-				()=>{
-					res.status(201).json({message: "Successfully Signed up"})
-				})
-				.catch((error)=> {
-					throw error
-					res.status(500).json({message: "!error in signing up"})
-				})
-		})
-			.catch((error)=> {
-				throw error
-			})
-
+//this is the landing page
+const landing_page = (req,res) => {
+	res.render('landing')
 }
 
-const login = (req,res)=> {
-	User.findOne({(req.body.email}).then((user)=> {
-		if(!user) {
-			res.json({message: 'user with that email does not exist'})
-		}
-	})
+//this is the signup pagesignup_page
+const register_page = (req,res) => {
+	res.render('register')
+}
 
-	bcrypt.compare(req.body.password, user.password).then((valid)=> {
-		if(!valid)=> {
-			res.status(400).json({message: "incorrect password"})
-		}
+//this is the login page render
+const login_page = (req,res) => {
+	res.render('login')
+}
+//contact route
+const contact_page =(req,res)=> {
+	res.render('contact')
+}
+//about route
+const about_page =(req,res)=> {
+	res.render('contact')
+}
 
-		const token = jwt.sign({userId: user._id},'RANDOM USER SECRET STRING')
-		res.cookie('t', token,{expire: new Date() + 9999})
 
-		const{_id,firstname, lastname,email} = user;
-		return res.json({token, user: {_id, firstname,lastname, email}})
 
-		res.status(200).json({
-			userId: user._id,
-			token: 'token'
+
+
+const singup = (req,res) => {
+	
+	
+	const {firstname, lastname,email,phone_number, password,password2} = req.body;
+	let errors = [];
+
+	if(!firstname || !lastname || !email || !phone_number || !password || !password2) {
+		errors.push({message: "please fill in all the requirements"})
+	}
+	
+	if(password !== password2) {
+		errors.push({message: "password do not match"})
+	}
+
+	if(password.length < 6) {
+		errors.push({message: "password cannot be less than 6 characters"})
+	}
+
+	if(errors.length > 0) {
+		res.render('register',{
+			errors,firstname,lastname, email,phone_number, password, password2
 		})
-	}).catch((error)=> {
-		throw error
-	}).catch((error)=> {
-		throw error
-		res.status(500).json({
-			error: error
+	} else {
+		User.findOne({email:email})
+		.then(user => {
+			if(user)   {
+				errors.push({message:"Email is arleady taken"});
+				res.render('register',{
+					errors,firstname, lastname,email,phone_number, password, password2
+				})
+			}else {
+				
+				bcrypt.hash(req.body.password, 10).then((hash)=> {
+					const user = new User({
+						firstname,
+						lastname,						
+						email,
+						phone_number,
+						password:hash
+					});
+					console.log('the user is',user)
+					user.save().then(
+						()=>{
+							req.flash('success','your now registered! login')
+							res.redirect('/users/users/property_page')
+						}).catch((error)=>{
+							throw error
+						})
+				}).catch((error)=> {
+					throw error
+				})
+			}
 		})
-	})
+	}
+		
+}
+
+const login = (req,res,next)=> {
+	passport.authenticate('local',{
+		successRedirect : '/users/home_page',
+		failureRedirect: '/user/login_page',
+		
+	})(req,res,next);
+	console.log(req.flash)
+	
 }
 
 //display all users in the database
@@ -74,9 +106,19 @@ const allUsers = (req,res)=> {
 	})
 }
 
-const signout = (req, res)=> {
-	res.clearCookie('t')
-	res.json({message: 'Signout Successfully!!'})
+
+
+const logout = (req,res)=> {
+	req.logout();
+	req.flash('sucess',"your are logged out");
+	res.redirect('/users/');
 }
 
-module.exports = {signup,login,signout,allUsers}
+const property_page = (req,res)=>{
+	res.render('property')
+}
+
+module.exports = {singup,login,logout,allUsers,login_page,
+				landing_page,register_page,contact_page,about_page,property_page}
+				 
+				 

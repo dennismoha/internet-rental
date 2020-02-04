@@ -5,8 +5,8 @@ const userSingupSchema = new mongoose.Schema({
 	firstname:{type:String, required:true, trim:true, maxLength:10},
 	lastname :{type:String, required:true, trim:true, maxLength:10},
 	email : {type:String, required:true, trim:true, unique:true},
-	phone_number: {type:String, required:true, trim:true,unique:true, maxLength:10}
-	password : {type:String, required:true, trim:true}
+	phone_number: {type:String, required:true, trim:true,unique:true, maxLength:10},
+	password : {type:String, required:true, trim:true},
 	photo: { data: Buffer, contentType: String}
 })
 
