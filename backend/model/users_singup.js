@@ -7,7 +7,10 @@ const userSingupSchema = new mongoose.Schema({
 	email : {type:String, required:true, trim:true, unique:true},
 	phone_number: {type:String, required:true, trim:true,unique:true, maxLength:10},
 	password : {type:String, required:true, trim:true},
-	photo: { data: Buffer, contentType: String}
+	role:{type:String, default:'user',enum:["user","landlord","admin"]},
+	photo: { data: Buffer, contentType: String},
+	accessToken:{type:String}
+
 })
 
 module.exports = mongoose.model('userSingup',userSingupSchema)

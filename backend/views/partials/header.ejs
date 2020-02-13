@@ -17,13 +17,14 @@
 <% if(!currentUser) {%>
 	
 		<div style="text-align: right; font-family: 'Raleway', sans-serif;" >
-				<a href = "/users/users/signup_page" >Singup </a>
-				<a href = "/users/users/signup_page" style="margin:30px" > Login</a>
+				<a href = "/page/users/signup_page" >Singup </a>
+				<a href = "/page/users/login" style="margin:30px" > Login</a>
 		</div>
 <% } else{ %>
 	<div style="text-align: right; font-family: 'Raleway', sans-serif;" >
 		
-		<a href = "/users/" class = "btn btn-primary">logout</a>
+		<a href = "/page/users/dashboard_pagee" class = "btn btn-primary">profile</a>
+		<a href = "/users/users/logout" class = "btn btn-primary">logout</a>
 	<div style="text-align: right; font-family: 'Raleway', sans-serif;" >
 <% } %>
 
@@ -41,7 +42,7 @@
 	        <a class="nav-link" href="/users/users/about_page">About <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="/users/users/contact_page">Contact</a>
+	        <a class="nav-link" href="/page/users/contact_page">Contact</a>
 	      </li>
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

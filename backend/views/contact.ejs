@@ -1,7 +1,28 @@
 
 <%- include('./partials/header'); %>
 
+<p> show all users in the company </p>
+
+
+<br>
+
+<% users.forEach(function(user){%>
+          <div class="col-lg-4 col-sm-6">
+              <div class="thumbnail">    
+                
+               <div class = "caption" >
+              	 <h4> <%= user.email %> </h4>  
+                
+               </div>                              
+              	
+              </div>
+
+
+         </div>              
+     <% }) %>
+
 
 this is the company contact page
+
 
 <%- include('./partials/footer'); %>

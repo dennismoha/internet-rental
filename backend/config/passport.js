@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const User = require('../model/users_singup');
 const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 
 module.exports = (passport)=> {
 	passport.use(
@@ -16,7 +17,7 @@ module.exports = (passport)=> {
 					bcrypt.compare(password,user.password,(err,isMatch)=>{
 						if(err)  throw err;
 
-						if(isMatch) {
+						if(isMatch) {							
 							return done(null, user);
 						}else {
 							return done(null, false, {message:"password incorrect"})

@@ -11,9 +11,15 @@ const app 	= express();
  app.use(express.static(__dirname + "/public"));
  app.use(express.static(__dirname + '/public/js'));
 //user routes
-const user = require('./routes/user_auth')
+const user = require('./routes/user_auth');
+const pages = require('./routes/pages')
+const admin = require('./routes/admin')
 
+app.set('view engine','ejs');
+
+// require('./config/landlord_config')(passport);
 require('./config/passport')(passport);
+
 require('dotenv').config();
 
 mongoose.connect('mongodb://localhost:27017/pata_space', {useNewUrlParser: true});
@@ -43,11 +49,13 @@ app.use((req,res,next)=> {
 	next();
 });
 
-app.set('view engine','ejs');
+
 
 
 //user routes
 app.use('/users',user)
+app.use('/page',pages)
+app.use('/admin',admin)
 
 const port =  process.env.PORT || 8000
 

@@ -2,6 +2,16 @@
 
 
 
+<% if(currentUser.role === 'admin') {%>
+	<p>users <a href = "/users/users" class = "btn btn-primary">get all users </p>
+		
+			
+<% } else{ %>
+	<p> welcome jonathan </p>	
+	<%= currentUser.role %>
+
+<% } %>
+	
 	
 
 <%- include('./partials/footer'); %>
