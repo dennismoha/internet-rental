@@ -1,0 +1,23 @@
+<%- include('../partials/header'); %>
+
+
+
+<% if(currentUser.role === 'admin') {%>
+
+	<p>users <a href = "/page/admin/page" class = "btn btn-primary">profile</p>
+		
+			
+<% } else if(currentUser.role === 'user'){ %>
+	<p> welcome jonathan </p>	
+	<%= currentUser.role %>
+
+<% } else if(currentUser.role === 'landlord') { %>
+	<p> this is the <%= currentUser.role %> page
+	this is teh landlord page
+
+<% } %>
+	
+	
+
+<%- include('../partials/footer'); %>
+

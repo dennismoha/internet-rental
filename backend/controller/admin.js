@@ -23,7 +23,7 @@ const createUser = (req,res) => {
 	}
 
 	if(errors.length > 0) {
-		res.render('register',{
+		res.render('Admin/createUser',{
 			errors,firstname,lastname, email,phone_number, password, password2
 		})
 	} else {
@@ -31,7 +31,7 @@ const createUser = (req,res) => {
 		.then(user => {
 			if(user.email || user.phone_number)   {
 				errors.push({message:"email or phone_number arleady exists"});
-				res.render('register',{
+				res.render('Admin/createUser',{
 					errors,firstname, lastname,email,phone_number, password, password2
 				})
 			}else {
@@ -76,8 +76,22 @@ const removeUser = (req,res) => {
 	})
 }
 
-const updatUser = (req,res)=> {
-	
+//render admin reg form 
+
+const regForm = (req,res) => {
+	res.render('Admin/createUser')
 }
 
-module.exports = {createUser}
+//getting all the users;
+const getUsers = (req,res) => {
+	User.find().then(
+		(user)=> {
+			if(user) {
+				res.render('Admin/all_users',{users:user})
+			}
+		}).catch((err)=> {
+			throw err
+		})
+}
+
+module.exports = {createUser,getUsers,regForm}
