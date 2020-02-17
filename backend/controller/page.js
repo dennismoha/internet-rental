@@ -59,9 +59,22 @@ const about_page = (req,res) => {
 	res.render('Admin/about')
 }
 
+const landlord_dashboard = (req,res) => {
+	res.render('landlord/landlord_dashboard');
+}
 
+const landlord_create_property = (req,res) => {
+	res.render('landlord/property_create');
+}
 
-module.exports = {login_page,
-				landing_page,register_page,contact_page,
-				about_page,property_page,dashboard_page,admin_page
-,admin_contactPage,admin_aboutPage,home_about_page}
+// const landlord_view_property = (req,res)=> {
+// 	res.render('landlord/property_show')
+// }
+
+const add_category =(req,res) => {
+	res.render('Admin/create_category')
+}
+  
+module.exports = {login_page,landing_page,register_page,contact_page,about_page,
+	property_page,dashboard_page,admin_page,admin_contactPage,admin_aboutPage,home_about_page,
+	landlord_dashboard,landlord_create_property,add_category}

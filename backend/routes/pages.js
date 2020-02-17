@@ -20,6 +20,10 @@ pageRoute.get('/admin/adminAboutPage',Pages.admin_aboutPage);
 pageRoute.get('/about',Pages.about_page)
 pageRoute.post('/about/add_content',content_page.about_page);
 
+pageRoute.get('/landlord/dashboard_page',Pages.landlord_dashboard)
+pageRoute.get('/landlord/create_property',Pages.landlord_create_property);
+//pageRoute.get('/landlord/view_property',Pages.landlord_view_property)
+pageRoute.get('/category/add_category',Pages.add_category)
 
 
 

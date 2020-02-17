@@ -13,7 +13,9 @@ const app 	= express();
 //user routes
 const user = require('./routes/user_auth');
 const pages = require('./routes/pages')
-const admin = require('./routes/admin')
+const admin = require('./routes/admin');
+const property = require('./routes/property');
+const category = require('./routes/category')
 
 app.set('view engine','ejs');
 
@@ -43,6 +45,7 @@ app.use(flash())
 //global variables
 app.use((req,res,next)=> {
 	res.locals.currentUser = req.user;
+	res.locals.property = req.properties
 	res.locals.sucess = req.flash('sucess');
 	res.locals.error =  req.flash('error');
 	res.locals.error_login =  req.flash('error_login');
@@ -53,9 +56,11 @@ app.use((req,res,next)=> {
 
 
 //user routes
-app.use('/users',user)
-app.use('/page',pages)
-app.use('/admin',admin)
+app.use('/users',user);
+app.use('/page',pages);
+app.use('/admin',admin);
+app.use('/property',property);
+app.use('/category',category)
 
 const port =  process.env.PORT || 8000
 

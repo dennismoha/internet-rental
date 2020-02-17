@@ -1,0 +1,36 @@
+showing all the categories
+
+<%- include('../partials/admin/header'); %>
+<%- include('../partials/admin/navbar'); %>
+<%- include('../partials/admin/sidenav'); %>
+	
+	
+  <% category.forEach(function(category){%>
+          <div class="col-lg-4 col-sm-6">
+              <div class="thumbnail">    
+                 
+               <div class = "caption" >
+              	 <h4> <%= category.name %> </h4>
+                
+               </div>   
+               <div style="position: relative;float: 30px;padding: 10px;display: inline;">                           
+	              	<button class="btn btn-success">Edit</button>
+	              	<button class="btn btn-danger">Delete</button>
+              </div>
+              </div>
+         </div>              
+     <% }) %>
+
+	</div>
+
+
+  
+
+
+
+  
+      </div>
+    </main>
+  </div>
+</div>
+<%- include('../partials/footer'); %>
