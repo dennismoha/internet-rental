@@ -4,7 +4,7 @@ const About = require('../model/about')
 
 //this is the landing page
 const landing_page = (req,res) => {
-	res.render('home/landing')
+	res.redirect('/property/property/user_landing_property_page')
 }
 
 //this is the signup pagesignup_page
@@ -40,7 +40,7 @@ const dashboard_page =(req,res)=> {
 }
 
 const property_page = (req,res)=>{
-	res.render('home/property')
+	res.redirect('/property/property/user_property_page')
 }
 
 const admin_page = (req,res)=> {
@@ -74,7 +74,22 @@ const landlord_create_property = (req,res) => {
 const add_category =(req,res) => {
 	res.render('Admin/create_category')
 }
+
+const user_edit =(req,res) => {
+	User.findById(req.params.id).then((userFound)=> {
+		if(userFound) {			
+			const userfound = Object.keys(userFound)
+			res.render('Admin/user_edit',{userFound:userFound});
+		}
+	}).catch((error)=> {
+		throw error;
+		
+	})
+
+
+	
+}
   
 module.exports = {login_page,landing_page,register_page,contact_page,about_page,
 	property_page,dashboard_page,admin_page,admin_contactPage,admin_aboutPage,home_about_page,
-	landlord_dashboard,landlord_create_property,add_category}
+	landlord_dashboard,landlord_create_property,add_category,user_edit}

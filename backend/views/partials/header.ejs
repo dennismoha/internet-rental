@@ -2,34 +2,16 @@
 	<html>
 		<head>
 			<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-			<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">			
+			<link rel="stylesheet" type="text/css" href="/stylesheet/bootstrap.min.css">
+			<!-- <link rel="stylesheet" href="/path/to/font-awesome/css/font-awesome.min.css"> -->
 			<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 			<link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet">
 			<link rel="stylesheet" type="text/css" href="/stylesheet/about.css">
-	
-		
-		
-
-
+			<link rel="stylesheet" type="text/css" href="/stylesheet/carousel.css">
+			
 		</head>
 	<body>
-<!-- <% if(!currentUser) {%>
-	
-		<div style="text-align: right; font-family: 'Raleway', sans-serif;" >
-				<a href = "/page/users/signup_page" >Singup </a>
-				<a href = "/page/users/login" style="margin:30px" > Login</a>
-		</div>
-<% } else{ %>
-	<div style="text-align: right; font-family: 'Raleway', sans-serif;" >
-		
-		<a href = "/page/users/dashboard_pagee" class = "btn btn-primary">profile</a>
-		<a href = "/users/users/logout" class = "btn btn-primary">logout</a>
-	<div style="text-align: right; font-family: 'Raleway', sans-serif;" >
-<% } %> -->
-
-
 
 <% if(!currentUser) {%>
 	
@@ -39,21 +21,23 @@
 		</div>
 <% } else if(currentUser.role == 'admin'){ %>
 	<div style="text-align: right; font-family: 'Raleway', sans-serif;" >
-
-
 		
 		 <a href = "/page/admin/page" class = "btn btn-primary">profile</a>
 		<a href = "/page/users/dashboard_pagee" class = "btn btn-primary">profile</a>
 		<a href = "/users/users/logout" class = "btn btn-primary">logout</a>
 
-	<% } else {%>
+	<% } else if(currentUser.role == 'user') {%>
 	<a href = "/page/users/dashboard_pagee" class = "btn btn-primary">profile</a>
 	<a href = "/users/users/logout" class = "btn btn-primary">logout</a>
 	<div style="text-align: right; font-family: 'Raleway', sans-serif;" >
+<% } else if(currentUser.role == 'landlord'){ %>
+		<a href = "/page/landlord/dashboard_page" class = "btn btn-primary">landlord profile</a>
+		<a href = "/page/users/dashboard_pagee" class = "btn btn-primary">profile</a>
+		<a href = "/users/users/logout" class = "btn btn-primary">logout</a>
 <% } %> 
 
 
-<div class = "container">
+<div class = "container-fluid">
 			<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 	  <a class="navbar-brand" href="/users/">Home</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

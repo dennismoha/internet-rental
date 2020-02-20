@@ -12,6 +12,8 @@ pageRoute.get('/users/contact_page',roles.allowIfLoggedin,Pages.contact_page);
 pageRoute.get('/users/property_page', roles.allowIfLoggedin, Pages.property_page);
 pageRoute.get('/',Pages.landing_page);
 pageRoute.get('/users/dashboard_pagee',roles.allowIfLoggedin,Pages.dashboard_page); //takes us to a users profile id
+pageRoute.get('/users/edit/:id',Pages.user_edit);
+
 pageRoute.get('/admin/page',Pages.admin_page);
 pageRoute.get('/admin/registerUser',Admin.regForm);
 pageRoute.get('/admin/contactPage',Pages.admin_contactPage);

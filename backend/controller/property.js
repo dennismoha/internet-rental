@@ -1,4 +1,77 @@
 const Property = require('../model/property');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+	destination: function(req,file,cb) {
+		cb(null,'public/images')
+	},
+	filename: function(req,file,cb) {
+		cb(null,Date.now() + '_' + file.originalname);
+	}
+});
+
+
+const new_property =(req,res,next) => {
+	const upload = multer({storage}).single('photo')
+	upload(req,res, (err)=> {
+		if(err) {
+			throw err			
+		}
+		console.log('file uploaded to the server')
+		console.log(req.file)
+
+		//sending files to cloudinary
+		const cloudinary = require('cloudinary').v2
+		cloudinary.config({
+		cloud_name: 'moha254',
+		api_key: '934657442839282',
+		api_secret: 'hA-U4qbIYxTLwqJ34_OUmic6fgM'
+
+		})
+
+		const path = req.file.path
+		console.log(path);
+		const uniquefilename = new Date().toISOString()
+
+		cloudinary.uploader.upload(
+			path,
+			{public_id: `blog/${uniquefilename}`, tags: `blog`},
+			(err,image)=> {
+				if(err){
+					res.send(err)
+					console.log('error uploading to cloudinary')
+				}
+						const property = new  Property({
+							title : req.body.title,
+							description : req.body.description,
+							price : req.body.price,
+							// category : req.body.category,
+							quantity : req.body.quantity,
+							sold : req.body.sold,
+							photo:req.image.url
+						});	
+
+						console.log(property);
+
+						property.save().then(
+							(property)=> {
+								if(property){
+									res.render('landlord/property_show',{property:property})
+								}
+								
+							}).catch((error)=> {
+								throw error;
+								console.log('error in adding new property');
+							})
+
+							
+				console.log('gif image successfully')
+			}
+			)
+	})
+	next()
+
+}
 
 const properties = (req,res) => {
 	Property.find().then(
@@ -14,35 +87,38 @@ const properties = (req,res) => {
 		})
 }
 
-const new_property = (req,res) => {
-	
-	const property = new  Property({
-		title : req.body.title,
-		description : req.body.description,
-		price : req.body.price,
-		// category : req.body.category,
-		quantity : req.body.quantity,
-		sold : req.body.sold
+// const new_property = (req,res) => {
+// 	const property = new  Property({
+// 		title : req.body.title,
+// 		description : req.body.description,
+// 		price : req.body.price,
+// 		// category : req.body.category,
+// 		quantity : req.body.quantity,
+// 		sold : req.body.sold
+		
+// 	});	
 
-	})
-	property.save().then(
-		(property)=> {
-			if(property){
-				res.render('landlord/property_show',{property:property})
-			}
+// 	console.log(property);
+
+// 	property.save().then(
+// 		(property)=> {
+// 			if(property){
+// 				res.render('landlord/property_show',{property:property})
+// 			}
 			
-		}).catch((error)=> {
-			throw error;
-			console.log('error in adding new property');
-		})
+// 		}).catch((error)=> {
+// 			throw error;
+// 			console.log('error in adding new property');
+// 		})
 
-}
+// }
 
 
 const user_property_page = (req,res) => {
 	Property.find().then(
 		(property)=> {
 			if(property) {
+
 				 res.render('home/property',{property: property})
 
 			}
@@ -53,7 +129,22 @@ const user_property_page = (req,res) => {
 		})
 }
 
-module.exports = {properties,new_property,user_property_page }
+const user_landing_property_page = (req,res) => {
+	Property.find().then(
+		(property)=> {
+			if(property) {
+				console.log(property)
+				 res.render('home/landing',{property: property})
+
+			}
+			
+		}).catch((error)=> {
+			throw error
+			console.log('error in the find all property route',error)
+		})
+}
+
+module.exports = {properties,new_property,user_property_page,user_landing_property_page }
 
 
 

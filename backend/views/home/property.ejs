@@ -16,6 +16,41 @@ ss
 	this is teh landlord page
 
 <% } %>
+
+
+
+
+          <!-- <div class="col-lg-4 col-sm-6">
+              <div class="thumbnail">    
+                  
+               <div class = "caption" >
+              	 <h4>  </h4>
+                
+               </div>                              
+              	
+              </div>
+         </div>  -->             
+    
+
+
+
+     <div class="container" >
+    <!-- Example row of columns -->
+    <div class="row">
+    	<% property.forEach(function(property){%>
+      <div class="col-md-4">
+        <h2><%= property.title %></h2>
+        <div style="height: 150px;width: 150px;background-color: grey;position: relative;left: 150px;"> </div>
+        <p> <%= property.description %></p>
+        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+      </div>  
+       <% }) %>   
+    </div>
+
+    <hr>
+
+  </div> <!-- /container -->
+
 	
 	
 

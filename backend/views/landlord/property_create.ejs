@@ -5,7 +5,7 @@
 	<%- include('../partials/landlord/sidenave'); %>	
 
 
-	<form action = "/property/property/new_property" method="post">
+	<form action = "/property/property/new_property" method="post" enctype="multipart/form-data">
 		  <div class="form-group">
 		    <label for="name">name</label>
 		    <input type="text" class="form-control" id="prop_name" aria-describedby="emailHelp" placeholder="name" name = "title">
@@ -36,9 +36,15 @@
 		  </div>
 
 		   <div class="form-group">
-		    <label for="quantity">sold</label>
-		    <input type="name" class="form-control" id="exampleInputEmail1" aria-describedby="categoryHelp" placeholder="quantity" name="sold">
-		    <small id="quantityHelp" class="form-text text-muted">sold ?</small>
+		    <label for="photo">sold</label>
+		    <input type="name" class="form-control" id="sold" aria-describedby="categoryHelp" placeholder="sold" name="sold">
+		    <small id="soldHelp" class="form-text text-muted">sold ?</small>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="photo">photo</label>
+		    <input type="file"  class="form-control" id="photo" aria-describedby="photoHelp"  name="photo">
+		    <small id="quantityHelp" class="form-text text-muted">upload image</small>
 		  </div>
 		  
 		 

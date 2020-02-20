@@ -66,18 +66,13 @@ const singup = (req,res) => {
 						phone_number,
 						password:hash
 					});
-
-					const accessToken = jwt.sign({userId:user._id},"secret string",{
-						expiresIn:"24h"
-					})
-					user.accessToken = accessToken
-					console.log('the user is',user)
+					
 					user.save().then(
 						()=>{
 							req.flash('success','your now registered! login')							
 							 // res.redirect('/users/home_page')
 							 console.log(user)
-							 res.render('property')
+							 res.redirect('/page/')
 							
 						}).catch((error)=>{
 							throw error
@@ -119,10 +114,14 @@ const getUser =(req,res) => {
 	 		if(err) {
 	 			//use and error handler here
 	 			res.status(400).json({message: "user not found"})
+	 		}	
+
+	 		if(userFound.role === "admin") {
+	 			res.send('You cannot access this page')
+	 		} else {
+	 			res.render('Admin/users',{user:userFound })	 			
 	 		}
-	 	
-	 		res.send(userFound)
-	 		// res.render('show page',{user})
+	 		
 	 	})
 
 
@@ -130,37 +129,85 @@ const getUser =(req,res) => {
 	// 	console.log('permission denied')
 	// 	res.status(403).end();
 	// }
-	 	
-
 	 }
 
-//updating a single user
-const updateUser = (req,res) => {
-	//const permission = ac.can(req.user.ro)
-	
-	User.findByIdAndUpdate(req.params.id,(err,user)=> {
-		if(err) {
-			//
-			console.log("can't uodate this user")
-			throw error
-		}
-		console.log(user)
 
-		// res.render('allusers page',{user})
-	})
+	 //get a single user
+
+
+//updating a single user
+// const updateUser = (req,res) => {
+// 	//const permission = ac.can(req.user.ro)
+	
+// 	User.findByIdAndUpdate(req.params.id,(err,user)=> {
+// 		if(err) {
+// 			//
+// 			console.log("can't uodate this user")
+// 			throw error
+// 		}
+// 		console.log(user)
+
+// 		// res.render('allusers page',{user})
+// 	})
+// };
+
+const updateUser = (req,res) => {
+
+	
+	// console.log(req.body)
+	const user =  new User({
+		_id : req.params.id,
+		firstname:req.body.firstname,
+		lastname : req.body.lastname,
+		email:req.body.email,
+		phone_number:req.body.phone_number,
+		role:req.body.role
+	});
+
+	User.updateOne({_id:req.params.id},user).then(
+		()=>{
+			res.send('user')
+		}).catch((error)=>{
+			throw error
+		})
+
 }
+
+
 
 //deleting a single user
 const deleteUser = (req, res) => {
+	console.log(req.params)
 	User.findByIdAndRemove(req.params.id,(err,removeUser)=> {
 		if(err) {
 			console.log('error deleting user');
 			throw err
 		}
+
 			console.log('user successfully deleted')
+			res.send('user removed successfully')
 		// res.redirect('/')
 	})
 }
+
+
+// const deleteUser =(req,res) => {
+// 	// console.log('this is the delete user route',req)
+// 	// User.deleteOne({id:req.params.id}).then(
+// 	// 	()=> {
+// 	// 		res.status(200).json({
+// 	// 			message: "deleted successfully"
+// 	// 		})
+// 	// 	}).catch((error)=> {
+// 	// 		throw err
+// 	// 		console.log('error in deleting user');
+// 	// 	})
+
+// }
+//editing user route
+
+
+
 
 //logout module
 const logout = (req,res)=> {

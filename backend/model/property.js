@@ -29,7 +29,11 @@ const propertySchema = new mongoose.Schema({
         sold: {
             type: Number,
             default: 0
-        }
+        },
+        photo: {
+            type: String //buffer, allows us store images in data in form of arrays
+            
+        }        
 
 },{timestamps:true})
 

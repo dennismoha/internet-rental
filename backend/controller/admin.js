@@ -51,7 +51,7 @@ const createUser = (req,res) => {
 							req.flash('success','User successfully added! login')							
 							 // res.redirect('/users/home_page')
 							 console.log(user)
-							 res.render('Admin/all_users',{user:user})
+							 res.redirect('/admin/admin/getUser')
 							
 						}).catch((error)=>{
 							throw error

@@ -4,19 +4,40 @@
 <%- include('../partials/admin/navbar'); %>
 <%- include('../partials/admin/sidenav'); %>           
   
-  <% users.forEach(function(user){%>
-          <div class="col-lg-4 col-sm-6">
-              <div class="thumbnail">    
-                
-               <div class = "caption" >
-                 <h4> <%= user.firstname %> </h4>
-                
-               </div>                              
-                
-              </div>
-         </div>              
-     <% }) %>
 
+
+
+
+ <div class = "container">
+    <div class="row">
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">firstname</th>
+      <th scope="col">lastname</th>
+      <th scope="col">email</th>
+       <th scope="col">Role</th>
+    </tr>
+  </thead>
+  <tbody>
+     <% users.forEach(function(user){%>
+        <tr>
+          <th scope="row">-</th>
+          <td><a href="/users/users/getUser/<%=user.id%>"><%=user.firstname %></td>
+          <td><%=user.lastname %></td>
+          <td><%=user.email %></td>
+          <td><%=user.role %></td>
+        </tr>  
+    <% }) %>
+  </tbody>
+</table>
+    </div>
+  </div>
+
+
+
+  
 
  
 

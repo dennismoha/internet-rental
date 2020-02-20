@@ -5,7 +5,8 @@ const path = require('path')
 const session = require('express-session');
 const flash = require('connect-flash')
 const passport = require('passport');
-const ejs = require('ejs')
+const methodOverride = require('method-override');
+const ejs = require('ejs');
 const app 	= express();
 
  app.use(express.static(__dirname + "/public"));
@@ -32,6 +33,8 @@ app.use(session({
 	
 }))
 
+app.use(methodOverride('_method'));
+
 //body-parser middleware but in express
 app.use(express.urlencoded({extended:false}));
 
@@ -45,7 +48,7 @@ app.use(flash())
 //global variables
 app.use((req,res,next)=> {
 	res.locals.currentUser = req.user;
-	res.locals.property = req.properties
+	res.locals.property_got = req.property
 	res.locals.sucess = req.flash('sucess');
 	res.locals.error =  req.flash('error');
 	res.locals.error_login =  req.flash('error_login');
