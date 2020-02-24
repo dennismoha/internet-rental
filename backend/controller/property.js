@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
 });
 
 
-const new_property =(req,res,next) => {
+const new_property =(req,res) => {
 	const upload = multer({storage}).single('photo')
 	upload(req,res, (err)=> {
 		if(err) {
@@ -36,11 +36,13 @@ const new_property =(req,res,next) => {
 		cloudinary.uploader.upload(
 			path,
 			{public_id: `blog/${uniquefilename}`, tags: `blog`},
-			(err,image)=> {
+			(err,photo)=> {
 				if(err){
 					res.send(err)
-					console.log('error uploading to cloudinary')
+					console.log('error uploading to cloudinary')					
+
 				}
+						console.log(photo)
 						const property = new  Property({
 							title : req.body.title,
 							description : req.body.description,
@@ -48,14 +50,22 @@ const new_property =(req,res,next) => {
 							// category : req.body.category,
 							quantity : req.body.quantity,
 							sold : req.body.sold,
-							photo:req.image.url
+							photo:photo.secure_url,
+							Owner: {
+								id:req.params.id,
+								owner: req.user.firstname + " " + req.user.lastname
+							}
 						});	
 
-						console.log(property);
+						console.log(req)
+
+						console.log(property.owner);
 
 						property.save().then(
 							(property)=> {
 								if(property){
+
+									console.log('this is the property',property)
 									res.render('landlord/property_show',{property:property})
 								}
 								
@@ -65,14 +75,15 @@ const new_property =(req,res,next) => {
 							})
 
 							
-				console.log('gif image successfully')
+				
 			}
 			)
 	})
-	next()
+	
 
 }
 
+//getting all properties
 const properties = (req,res) => {
 	Property.find().then(
 		(property)=> {
@@ -87,31 +98,30 @@ const properties = (req,res) => {
 		})
 }
 
-// const new_property = (req,res) => {
-// 	const property = new  Property({
-// 		title : req.body.title,
-// 		description : req.body.description,
-// 		price : req.body.price,
-// 		// category : req.body.category,
-// 		quantity : req.body.quantity,
-// 		sold : req.body.sold
-		
-// 	});	
+//getting a single property  -- show page
 
-// 	console.log(property);
-
-// 	property.save().then(
-// 		(property)=> {
-// 			if(property){
-// 				res.render('landlord/property_show',{property:property})
-// 			}
-			
-// 		}).catch((error)=> {
-// 			throw error;
-// 			console.log('error in adding new property');
-// 		})
-
+// const oneProperty = (req,res) => {
+// 	Property.findById(req.params.id,(err,property)=> {
+// 		if(err) {
+// 			console.log('error finding property');
+// 			throw err
+// 		}
+// 		res.render('properties/show',{property:property})
+// 	})
 // }
+
+
+const oneProperty = (req,res) => {
+	Property.findById(req.params.id).populate('reviews').exec((err,property)=> {
+		if(err) {
+			console.log('error populating the reviews ');
+			throw err
+		}
+		console.log(property)
+		res.render('properties/show',{property:property})
+	})
+}
+
 
 
 const user_property_page = (req,res) => {
@@ -144,7 +154,20 @@ const user_landing_property_page = (req,res) => {
 		})
 }
 
-module.exports = {properties,new_property,user_property_page,user_landing_property_page }
+const Search = (req,res) => {
+	console.log(req.query)
+	const name = req.query
+	Property.find({}).where('Property.title').equals(req.query).exec(function(nul,results) {
+		if(nul) {
+			res.send('item not found')
+		}
+		console.log('these are the results',results)
+		res.send(results)
+	})
+	
+}
+
+module.exports = {properties,new_property,user_property_page,user_landing_property_page,Search,oneProperty }
 
 
 

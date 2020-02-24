@@ -19,6 +19,7 @@ pageRoute.get('/admin/registerUser',Admin.regForm);
 pageRoute.get('/admin/contactPage',Pages.admin_contactPage);
 pageRoute.get('/admin/adminAboutPage',Pages.admin_aboutPage);
 
+
 pageRoute.get('/about',Pages.about_page)
 pageRoute.post('/about/add_content',content_page.about_page);
 

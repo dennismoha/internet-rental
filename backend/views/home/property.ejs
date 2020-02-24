@@ -8,8 +8,8 @@ ss
 		
 			
 <% } else if(currentUser.role === 'user'){ %>
-	<p> welcome jonathan </p>	
-	<%= currentUser.role %>
+	<div class="jumbotron" style="text-align: center"> welcome <%= currentUser.role %>jonathan </div>	
+	
 
 <% } else if(currentUser.role === 'landlord') { %>
 	<p> this is the <%= currentUser.role %> page
@@ -32,27 +32,19 @@ ss
          </div>  -->             
     
 
+<% property.forEach(function(property){%>
+ <div class="gallery">
+    <a target="_blank" href="/property/property/<%=property.id%>/show">
+      <img src="<%= property.photo %>" alt="Cinque Terre" width="600" height="400">
+    </a>
+    <div class="desc"><%= property.description %></div>
+</div>
+ <% }) %> 
 
-
-     <div class="container" >
-    <!-- Example row of columns -->
-    <div class="row">
-    	<% property.forEach(function(property){%>
-      <div class="col-md-4">
-        <h2><%= property.title %></h2>
-        <div style="height: 150px;width: 150px;background-color: grey;position: relative;left: 150px;"> </div>
-        <p> <%= property.description %></p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-      </div>  
-       <% }) %>   
-    </div>
-
-    <hr>
-
-  </div> <!-- /container -->
-
+ <p class="lead"><%= property.owner %></p>
+ <%- include('../partials/footer'); %>
 	
 	
 
-<%- include('../partials/footer'); %>
+
 

@@ -17,12 +17,12 @@ const propertySchema = new mongoose.Schema({
             trim: true,
             required: true,
             maxlength: 32
-        },
-        // category: {
-        //     type: mongoose.Schema.Types.ObjectId,
-        //     ref:'category'
-            
-        // },
+        },     
+
+        category: [{
+            type:mongoose.Schema.Types.ObjectId,
+            ref: 'category'
+        }],
         quantity: {
             type: Number
         },
@@ -33,7 +33,18 @@ const propertySchema = new mongoose.Schema({
         photo: {
             type: String //buffer, allows us store images in data in form of arrays
             
-        }        
+        },
+        reviews:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'reviews'
+        }] ,
+        Owner: {
+            id: {
+                type:mongoose.Schema.Types.ObjectId,
+                ref: 'users_singup'
+            },
+            owner:String
+        }       
 
 },{timestamps:true})
 

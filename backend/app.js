@@ -16,7 +16,8 @@ const user = require('./routes/user_auth');
 const pages = require('./routes/pages')
 const admin = require('./routes/admin');
 const property = require('./routes/property');
-const category = require('./routes/category')
+const category = require('./routes/category');
+const reviews = require('./routes/reviews');
 
 app.set('view engine','ejs');
 
@@ -36,7 +37,7 @@ app.use(session({
 app.use(methodOverride('_method'));
 
 //body-parser middleware but in express
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({extended:true}));
 
 //initializing passport
 app.use(passport.initialize());
@@ -63,7 +64,8 @@ app.use('/users',user);
 app.use('/page',pages);
 app.use('/admin',admin);
 app.use('/property',property);
-app.use('/category',category)
+app.use('/category',category);
+app.use('/review',reviews)
 
 const port =  process.env.PORT || 8000
 
