@@ -1,4 +1,5 @@
 const Property = require('../model/property');
+const category = require('../model/category')
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -154,17 +155,22 @@ const user_landing_property_page = (req,res) => {
 		})
 }
 
+
+
 const Search = (req,res) => {
-	console.log(req.query)
-	const name = req.query
-	Property.find({}).where('Property.title').equals(req.query).exec(function(nul,results) {
-		if(nul) {
-			res.send('item not found')
-		}
+	const Name = req.query.search;
+	console.log(req.query.search)
+	category.find({name:req.query.search},function(err, results) {
+		if(err) {
+			throw err
+		} else if(results && results.length == 0) {
+			res.json({message: 'property not found'})
+		}else {
 		console.log('these are the results',results)
-		res.send(results)
-	})
+		res.json(results)
 	
+	}
+	})
 }
 
 module.exports = {properties,new_property,user_property_page,user_landing_property_page,Search,oneProperty }

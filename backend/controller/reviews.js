@@ -15,6 +15,9 @@ const newReview =(req,res) => {
 					console.log(err)
 				}else {
 
+					// Review.author.id = req._id;
+					// Review.author.username = req.
+					console.log('this is the name of the reviewer',req)
 					property.reviews.push(review);
 					property.save();	
 					console.log('this is the review',property.reviews.content)				

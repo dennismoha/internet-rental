@@ -18,30 +18,21 @@ ss
 <% } %>
 
 
-
-
-          <!-- <div class="col-lg-4 col-sm-6">
-              <div class="thumbnail">    
-                  
-               <div class = "caption" >
-              	 <h4>  </h4>
-                
-               </div>                              
-              	
-              </div>
-         </div>  -->             
+                    
     
 
 <% property.forEach(function(property){%>
- <div class="gallery">
+ <div class="gallery" style="height: 180px; width: 180px; margin: 30px; overflow: scroll;">
     <a target="_blank" href="/property/property/<%=property.id%>/show">
-      <img src="<%= property.photo %>" alt="Cinque Terre" width="600" height="400">
+      <img src="<%= property.photo %>" alt="..." class="img-thumbnail">
+      
     </a>
     <div class="desc"><%= property.description %></div>
 </div>
+ <p class="lead"><%= property.owner %></p>
  <% }) %> 
 
- <p class="lead"><%= property.owner %></p>
+
  <%- include('../partials/footer'); %>
 	
 	

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/pata_space', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/pata_space_home', {useNewUrlParser: true});
 
 const userSingupSchema = new mongoose.Schema({
 	firstname:{type:String, required:true, trim:true, maxLength:10},

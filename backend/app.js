@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
@@ -66,6 +67,8 @@ app.use('/admin',admin);
 app.use('/property',property);
 app.use('/category',category);
 app.use('/review',reviews)
+
+
 
 const port =  process.env.PORT || 8000
 

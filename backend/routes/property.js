@@ -6,7 +6,7 @@ const grid = require('gridfs-stream');
 const propRoute = express.Router();
 
 
-propRoute.get('/property/Search?',roles.allowIfLoggedin,Properties.Search)
+propRoute.get('/property/Search',Properties.Search)
 propRoute.post('/property/new_property',roles.allowIfLoggedin,Properties.new_property)
 
 propRoute.get('/property/all_properties',roles.allowIfLoggedin,Properties.properties);

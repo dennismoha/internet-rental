@@ -152,7 +152,6 @@ const getUser =(req,res) => {
 // };
 
 const updateUser = (req,res) => {
-
 	
 	// console.log(req.body)
 	const user =  new User({

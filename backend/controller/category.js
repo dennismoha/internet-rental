@@ -32,5 +32,23 @@ const getCategories = (req,res) => {
 		})
 }
 
+const category_edit = (req,res) => {
+	const category = new Category({
+    _id: req.params.id,
+    name: req.body.name,
+   
+  });
+  Category.updateOne({_id: req.params.id},category).then(
+    () => {
+     res.redirect('/category/category/get_category')
+    }
+  ).catch(
+    (error) => {
+      res.status(400).json({
+        error: error
+      });
+    }
+  );
+}
 
 module.exports = {createCategory,getCategories}
